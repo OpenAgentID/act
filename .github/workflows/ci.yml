@@ -1,0 +1,72 @@
+name: ci
+
+# Verification for every change to the canonical ACT crate: fmt, clippy, and
+# the conformance suite. This repository owns the normative ACT wire format,
+# so a red run here means the format's reference implementation disagrees with
+# its own specification - nothing downstream can compensate for that.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: fmt, clippy, conformance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Format
+        run: cargo fmt --all -- --check
+
+      - name: Clippy
+        # The workspace lints deny unwrap/expect/panic outright, so clippy
+        # exits non-zero on any real violation. Style warnings are visible but
+        # do not gate yet; the ratchet to `-D warnings` is tracked separately.
+        run: cargo clippy --workspace --all-targets
+
+      - name: Test
+        # Includes the 19-test conformance suite plus unit tests. The `sign`
+        # feature is enabled for test targets via the dev-dependency passthrough,
+        # so a plain `cargo test` exercises minting and verification together.
+        run: cargo test --workspace
+
+  codeowners:
+    name: codeowners resolve
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Every owner handle resolves
+        # An owner scoped to the wrong organization produces no review request
+        # at all - a silent failure that also makes "require code-owner
+        # approval" unsatisfiable. Passes trivially until CODEOWNERS lands.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          errors=$(gh api "repos/${{ github.repository }}/codeowners/errors" \
+            --jq '.errors // []')
+          count=$(printf '%s' "$errors" | jq 'length')
+          if [ "$count" -gt 0 ]; then
+            echo "::error::CODEOWNERS has ${count} unresolvable entr(y/ies)"
+            printf '%s' "$errors" | jq -r '.[] | "  line \(.line): \(.message) - \(.source)"'
+            exit 1
+          fi
+          echo "ok: every CODEOWNERS handle resolves"

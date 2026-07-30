@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- First-party CI (`.github/workflows/ci.yml`): fmt, clippy, and the
+  conformance suite on every change, plus a CODEOWNERS resolution check.
 - `SPECIFICATION.md`, the first normative definition of the ACT byte format.
   ANVIL section 5 requires every compliant agent to operate under a scoped ACT
   but never defined its encoding, and the absence of that document is what
