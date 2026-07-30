@@ -27,6 +27,11 @@ sign = []
 workspace = true
 
 [dev-dependencies]
+# A dev-dependency on this crate enables `sign` for the test targets without
+# making it a default for library consumers. The conformance suite has to mint
+# tokens in order to check that they verify, so it needs the signing half even
+# though a verifier does not.
+agent-capability-token = { path = ".", features = ["sign"] }
 # Tests build keys from fixed seeds and assemble envelopes directly.
 ed25519-dalek = { workspace = true }
 serde_bytes = { workspace = true }

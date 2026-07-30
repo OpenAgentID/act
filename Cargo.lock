@@ -6,6 +6,7 @@ version = 3
 name = "agent-capability-token"
 version = "0.1.0"
 dependencies = [
+ "agent-capability-token",
  "ciborium",
  "ed25519-dalek",
  "serde",

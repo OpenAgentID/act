@@ -40,6 +40,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   boundaries with leeway, scope matching including the non-widening rule, version
   and algorithm rejection, oversized input, and malformed signatures.
 
+### Fixed
+
+- The conformance suite did not compile under a plain `cargo test`. It has to
+  mint tokens in order to check that they verify, and signing sits behind the
+  non-default `sign` feature. A dev-dependency on this crate with that feature
+  enables it for the test targets only, so verifiers - the dependency-sensitive
+  side - still get a build without the signing half.
+
 ### Notes on specific decisions
 
 - Signatures cover the `claims` byte string as it appears on the wire, not a
