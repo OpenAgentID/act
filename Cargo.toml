@@ -1,0 +1,27 @@
+[workspace]
+resolver = "2"
+members = ["agent-capability-token"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.78"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/OpenAgentID/act"
+authors = ["OpenAgentID"]
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_bytes = "0.11"
+ciborium = "0.2"
+ed25519-dalek = { version = "2.1", features = ["serde"] }
+thiserror = "2.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"

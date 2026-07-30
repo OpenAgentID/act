@@ -1,0 +1,33 @@
+[package]
+name = "agent-capability-token"
+description = "Canonical wire format for the Agent Capability Token (ACT) required by ANVIL section 5."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords = ["capability", "token", "cbor", "ed25519", "authorization"]
+categories = ["cryptography", "authentication", "encoding"]
+
+[dependencies]
+serde = { workspace = true }
+serde_bytes = { workspace = true }
+ciborium = { workspace = true }
+ed25519-dalek = { workspace = true }
+thiserror = { workspace = true }
+
+[features]
+default = []
+# Signing requires holding a private key. Verifiers - the dependency-sensitive
+# side, typically sidecars and off-path workers - do not need it.
+sign = []
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+# Tests build keys from fixed seeds and assemble envelopes directly.
+ed25519-dalek = { workspace = true }
+serde_bytes = { workspace = true }
+ciborium = { workspace = true }
