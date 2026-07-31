@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `examples/gen_conformance_vectors.rs` exports the conformance suite as 13
+  JSON vectors (`openagent-sdk/conformance/vectors/arsenal/act-verify.json`):
+  valid tokens, wildcard coverage, scope refusal, expiry, not-yet-valid,
+  leeway, audience and issuer refusal, foreign key, tampering, unsupported
+  version (normative version-first ordering), oversized payloads, and
+  multi-audience. Envelopes are minted deterministically (fixed seed, pinned
+  claims); runners in both languages verify through the canonical
+  implementation - the Rust runner through this crate, the TypeScript runner
+  through `@openagent/crypto-wasm` - never a handwritten re-implementation,
+  which is the drift rule. Both runners pass 212/212 with drift: 0.
 - Community health files: CONTRIBUTING, SECURITY, CODEOWNERS, AGENTS.md, and
   issue/PR templates. The license files (`LICENSE-APACHE`, `LICENSE-MIT`)
   were committed with the initial workspace.

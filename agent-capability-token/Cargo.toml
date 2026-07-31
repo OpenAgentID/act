@@ -32,7 +32,10 @@ workspace = true
 # tokens in order to check that they verify, so it needs the signing half even
 # though a verifier does not.
 agent-capability-token = { path = ".", features = ["sign"] }
-# Tests build keys from fixed seeds and assemble envelopes directly.
+# The vector generator renders JSON; tests build keys from fixed seeds and
+# assemble envelopes directly.
+serde_json = "1.0"
+hex = "0.4"
 ed25519-dalek = { workspace = true }
 serde_bytes = { workspace = true }
 ciborium = { workspace = true }
