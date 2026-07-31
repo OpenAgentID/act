@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- npm scope renamed from `@openagent/*` to `@openagentid/*` (the `@openagent`
+  scope is held by an unaffiliated third party). This affects the TypeScript
+  package names referenced in docs and the conformance vector descriptions
+  (e.g. `@openagentid/crypto-wasm`); the ACT wire format itself is unchanged.
+  Breaking for consumers only once packages are published to npm.
+
 ### Added
 
 - `examples/gen_conformance_vectors.rs` exports the conformance suite as 13

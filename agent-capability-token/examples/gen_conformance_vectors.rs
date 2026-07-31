@@ -117,7 +117,7 @@ fn main() {
     let vectors = serde_json::json!({
         "category": "arsenal",
         "name": "act-verify",
-        "description": "Canonical ACT verification vectors (act/SPECIFICATION.md). Envelopes are minted by the reference implementation with a fixed seed; each vector asserts the verifier's verdict and, on acceptance, key claims. Runners MUST verify through the canonical implementation (Rust: agent-capability-token; TS: @openagent/crypto-wasm act_verify) - never a handwritten re-implementation, which is the drift this suite exists to prevent.",
+        "description": "Canonical ACT verification vectors (act/SPECIFICATION.md). Envelopes are minted by the reference implementation with a fixed seed; each vector asserts the verifier's verdict and, on acceptance, key claims. Runners MUST verify through the canonical implementation (Rust: agent-capability-token; TS: @openagentid/crypto-wasm act_verify) - never a handwritten re-implementation, which is the drift this suite exists to prevent.",
         "spec": "act/SPECIFICATION.md",
         "vectors": [
             {
