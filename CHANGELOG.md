@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Community health files: CONTRIBUTING, SECURITY, CODEOWNERS, AGENTS.md, and
+  issue/PR templates. The license files (`LICENSE-APACHE`, `LICENSE-MIT`)
+  were committed with the initial workspace.
 - First-party CI (`.github/workflows/ci.yml`): fmt, clippy, and the
   conformance suite on every change, plus a CODEOWNERS resolution check.
 - `SPECIFICATION.md`, the first normative definition of the ACT byte format.

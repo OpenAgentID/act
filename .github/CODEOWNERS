@@ -1,0 +1,10 @@
+# Code owners for this repository.
+#
+# GitHub only resolves an owner that is a user with write access to this
+# repository or a team in the organization that owns it. The `codeowners`
+# job in `.github/workflows/ci.yml` fails the build if any handle below
+# stops resolving, so a stale entry cannot silently disable code-owner
+# review.
+
+# Default owner for anything not matched below.
+*  @l1feorg
