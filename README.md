@@ -1,9 +1,8 @@
 # Agent Capability Token (ACT)
 
-Canonical wire format for the Agent Capability Token required by [ANVIL][anvil]
-section 5, with a reference implementation in Rust.
-
-[anvil]: ../forge/anvil/SPECIFICATION.md
+Canonical wire format for the Agent Capability Token required by the ANVIL
+Capability Contract, with a reference implementation in Rust. The normative
+format is defined in [SPECIFICATION.md](SPECIFICATION.md).
 
 ## Why this exists
 

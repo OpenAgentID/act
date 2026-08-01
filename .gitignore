@@ -1,2 +1,49 @@
-/target
+# Rust build artifacts
+/target/
+**/target/
+**/*.rs.bk
+*.pdb
+*.rlib
+*.rmeta
+*.dSYM/
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+!.env.*.example
+.secrets/
+credentials.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Test and coverage artifacts
+coverage/
+*.profraw
+*.profdata
+lcov.info
+.tarpaulin/
+
+# Logs and temporary files
+*.log
+logs/
+*.tmp
+tmp/
+temp/
+
+# Editors
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*.swo
+
+# Operating systems
 .DS_Store
+Thumbs.db
+._*

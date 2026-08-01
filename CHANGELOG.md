@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Hardened repository hygiene for public release by excluding local
+  environment files, credentials, private keys, build outputs, coverage data,
+  logs, temporary files, and editor artifacts while preserving example
+  environment templates.
+- Corrected the standalone README specification link and narrowed the security
+  policy to the cryptographic primitives and verification behavior implemented
+  by this repository.
+- Brought the conformance-vector generator into CI compliance by applying the
+  current Rust formatter and propagating generation failures instead of
+  panicking.
 - Corrected the copyright holder to L1fe Labs, Inc. in the
   `LICENSE-APACHE`/`LICENSE-MIT` files and the README license section.
 - npm scope renamed from `@openagent/*` to `@openagentid/*` (the `@openagent`

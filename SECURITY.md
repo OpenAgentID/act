@@ -11,17 +11,18 @@ remediation plan or a reasoned rejection within 14.
 
 ## Scope
 
-This repository builds identity and credential infrastructure. The following
-are always in scope and treated as high severity:
+This repository defines and implements the ACT capability-token wire format.
+The following are always in scope and treated as high severity:
 
-- Forgery or bypass of token signatures, lineage proofs, or verification steps
-- Errors that let a verifier accept a malformed, expired, or wrong-audience token
+- Forgery or bypass of token signatures or verification steps
+- Errors that let a verifier accept a malformed, expired, wrong-issuer,
+  wrong-audience, or insufficiently scoped token
 - Disclosure of private key material, seeds, or credentials
 - Vulnerabilities in dependencies with a reachable exploit path
 
 ## Cryptographic notice
 
-Signing and verification use Ed25519; hashing uses BLAKE3; CBOR is used for
-wire encoding. If you believe you have found a weakness in how these are
-composed, please include a proof-of-concept against the conformance vectors
-where possible - it shortens triage considerably.
+ACT envelopes use Ed25519 signatures over the exact CBOR-encoded claim bytes.
+If you believe you have found a weakness in that composition, please include a
+proof-of-concept against the conformance suite where possible - it shortens
+triage considerably.

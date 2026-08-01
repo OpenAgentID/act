@@ -7,7 +7,7 @@
 //!
 //! Usage: cargo run --example gen_conformance_vectors -- <output-path>
 
-use agent_capability_token::{sign, ActClaims, Scope};
+use agent_capability_token::{sign, ActClaims, ActError, Scope};
 use ed25519_dalek::SigningKey;
 
 const SIGNER_SEED: [u8; 32] = [7u8; 32];
@@ -16,8 +16,8 @@ const FOREIGN_SEED: [u8; 32] = [9u8; 32];
 const IAT: i64 = 1_800_000_000;
 const EXP: i64 = 1_800_000_600;
 
-fn base_claims(aud: Vec<String>) -> ActClaims {
-    ActClaims {
+fn base_claims(aud: Vec<String>) -> Result<ActClaims, ActError> {
+    Ok(ActClaims {
         jti: "vector-act-1".to_string(),
         sub: "did:oas:l1fe:agent:vector".to_string(),
         iss: "arsenal:broker:test-1".to_string(),
@@ -27,13 +27,13 @@ fn base_claims(aud: Vec<String>) -> ActClaims {
         exp: EXP,
         tenant_id: "tenant-a".to_string(),
         scope: vec![
-            Scope::parse("tools:calendar:invoke").expect("scope"),
-            Scope::parse("tools:*:send").expect("wildcard"),
+            Scope::parse("tools:calendar:invoke")?,
+            Scope::parse("tools:*:send")?,
         ],
         cnf: None,
         delegation: None,
         ext: Default::default(),
-    }
+    })
 }
 
 fn input(
@@ -57,25 +57,31 @@ fn input(
     })
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let out_path = std::env::args()
         .nth(1)
         .unwrap_or_else(|| "act-verify.json".to_string());
 
     let signing_key = SigningKey::from_bytes(&SIGNER_SEED);
     let public_hex = hex::encode(signing_key.verifying_key().to_bytes());
-    let foreign_hex = hex::encode(SigningKey::from_bytes(&FOREIGN_SEED).verifying_key().to_bytes());
+    let foreign_hex = hex::encode(
+        SigningKey::from_bytes(&FOREIGN_SEED)
+            .verifying_key()
+            .to_bytes(),
+    );
 
-    let envelope = sign(&base_claims(vec!["omerta".to_string()]), &signing_key, None)
-        .expect("signs");
+    let envelope = sign(
+        &base_claims(vec!["omerta".to_string()])?,
+        &signing_key,
+        None,
+    )?;
     let envelope_hex = hex::encode(&envelope);
 
     let multi_envelope = sign(
-        &base_claims(vec!["omerta".to_string(), "other-service".to_string()]),
+        &base_claims(vec!["omerta".to_string(), "other-service".to_string()])?,
         &signing_key,
         None,
-    )
-    .expect("signs multi");
+    )?;
     let multi_hex = hex::encode(&multi_envelope);
 
     // Tampered envelope: flip one byte inside the claims byte string.
@@ -87,9 +93,12 @@ fn main() {
     // Unsupported version: re-encode the envelope with v = 99. The signature
     // covers only the claims bytes, so this envelope's signature is valid -
     // and the version check must still fire first.
-    let decoded = agent_capability_token::ActEnvelope::decode(&envelope).expect("decode");
+    let decoded = agent_capability_token::ActEnvelope::decode(&envelope)?;
     let v99_value = ciborium::Value::Map(vec![
-        (ciborium::Value::Text("v".into()), ciborium::Value::Integer(99.into())),
+        (
+            ciborium::Value::Text("v".into()),
+            ciborium::Value::Integer(99.into()),
+        ),
         (
             ciborium::Value::Text("alg".into()),
             ciborium::Value::Text(decoded.alg.clone()),
@@ -104,7 +113,7 @@ fn main() {
         ),
     ]);
     let mut v99_bytes = Vec::new();
-    ciborium::into_writer(&v99_value, &mut v99_bytes).expect("encode v99");
+    ciborium::into_writer(&v99_value, &mut v99_bytes)?;
     let v99_hex = hex::encode(&v99_bytes);
 
     // Oversized: 20 KiB of zeros (over the 16 KiB cap).
@@ -214,7 +223,8 @@ fn main() {
         ]
     });
 
-    let rendered = serde_json::to_string_pretty(&vectors).expect("render");
-    std::fs::write(&out_path, rendered + "\n").expect("write");
+    let rendered = serde_json::to_string_pretty(&vectors)?;
+    std::fs::write(&out_path, rendered + "\n")?;
     eprintln!("wrote {out_path}");
+    Ok(())
 }
