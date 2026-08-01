@@ -127,5 +127,6 @@ cargo fmt --all -- --check
 
 ## License
 
-Apache-2.0 OR MIT, at your option. See [LICENSE-APACHE](LICENSE-APACHE) and
-[LICENSE-MIT](LICENSE-MIT).
+Copyright © 2026 [L1fe Labs, Inc.](https://l1fe.ai)
+
+Licensed under either of [Apache License 2.0](LICENSE-APACHE) or [MIT license](LICENSE-MIT), at your option.

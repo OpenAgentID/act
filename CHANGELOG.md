@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Corrected the copyright holder to L1fe Labs, Inc. in the
+  `LICENSE-APACHE`/`LICENSE-MIT` files and the README license section.
 - npm scope renamed from `@openagent/*` to `@openagentid/*` (the `@openagent`
   scope is held by an unaffiliated third party). This affects the TypeScript
   package names referenced in docs and the conformance vector descriptions
