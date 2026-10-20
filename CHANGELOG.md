@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- A support policy, a code of conduct, issue forms, Dependabot updates for
+  Cargo and GitHub Actions, and an email route and supported-versions section
+  in the security policy.
+
 ### Changed
 
 - Hardened repository hygiene for public release by excluding local
@@ -20,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Brought the conformance-vector generator into CI compliance by applying the
   current Rust formatter and propagating generation failures instead of
   panicking.
+
+## [0.1.0] - 2026-08-01
+
+First release of `agent-capability-token` on crates.io.
+
+### Changed
+
 - Corrected the copyright holder to L1fe Labs, Inc. in the
   `LICENSE-APACHE`/`LICENSE-MIT` files and the README license section.
 - npm scope renamed from `@openagent/*` to `@openagentid/*` (the `@openagent`
