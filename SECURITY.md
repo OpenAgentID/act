@@ -2,12 +2,20 @@
 
 ## Reporting a vulnerability
 
-Report suspected vulnerabilities privately through **GitHub Security
-Advisories** for this repository (Security tab -> "Report a vulnerability").
-Do not open a public issue for an unpatched vulnerability.
+Report suspected vulnerabilities privately. Do not open a public issue for an
+unpatched vulnerability.
+
+- **GitHub:** this repository's **Security** tab -> **Report a vulnerability**
+  opens a private advisory visible only to you and the maintainers.
+- **Email:** <security@openagent.id>.
 
 We aim to acknowledge reports within 3 business days and to provide a
 remediation plan or a reasoned rejection within 14.
+
+## Supported versions
+
+Security fixes ship in the latest release of `agent-capability-token` and on
+`main`. Upgrade to the latest release to receive them.
 
 ## Scope
 

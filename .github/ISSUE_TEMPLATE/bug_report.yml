@@ -1,0 +1,37 @@
+name: Bug report
+description: Something doesn't work as documented.
+labels: [bug, triage]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "The version or commit you are using: `cargo tree -i agent-capability-token`, or the commit you built"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, runtime and version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: The smallest code or commands that show the problem.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      render: text
